@@ -31,3 +31,5 @@ GO
 "@
         
 & sqlcmd.exe -Q $sqlcmd
+
+Write-Host "FINISHED"
