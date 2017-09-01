@@ -1,14 +1,14 @@
 ﻿$serviceTierFolder = (Get-Item "C:\Program Files\Microsoft Dynamics NAV\*\Service").FullName
 Import-Module "$serviceTierFolder\Microsoft.Dynamics.Nav.Management.psm1"
 
-. (Join-Path $PSScriptRoot "HelperFunctions.ps1")
+. ".\Run\HelperFunctions.ps1"
 
 $NavServiceName = 'MicrosoftDynamicsNavServer$NAV'
 $SqlServiceName = 'MSSQL$SQLEXPRESS'
 $SqlWriterServiceName = "SQLWriter"
 $SqlBrowserServiceName = "SQLBrowser"
 
-Write-Host "Downloading database"
+Write-Host "Downloading country ZIP"
 $countryFile = "C:\COUNTRY.zip"
 (New-Object System.Net.WebClient).DownloadFile("$env:COUNTRYURL", $countryFile)
 [Reflection.Assembly]::LoadWithPartialName("System.IO.Compression.Filesystem") | Out-Null
@@ -21,9 +21,9 @@ Start-Service -Name $SqlBrowserServiceName -ErrorAction Ignore
 Start-Service -Name $SqlWriterServiceName -ErrorAction Ignore
 Start-Service -Name $SqlServiceName -ErrorAction Ignore
 
-# Restore CRONUS Demo database to databases folder
+# Restore database to databases folder
 
-Write-Host "Restore CRONUS Demo Database"
+Write-Host "Restore Database"
 $databaseName = "$env:DatabaseName"
 $databaseFolder = "c:\databases\$databaseName"
 $databaseServer = "localhost"
