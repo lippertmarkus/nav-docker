@@ -6,3 +6,5 @@
 run.ps1
 build.ps1
 clean.ps1
+custom/Add-ins/*
+!custom/Add-ins/.gitkeep
