@@ -1,5 +1,11 @@
 ﻿$Accept_eula = "$env:Accept_eula"
 
+$hostname = hostname
+$publicDnsName = "$env:PublicDnsName"
+if ($publicDnsName -eq "") {
+    $publicDnsName = $hostname
+}
+
 $auth = "$env:Auth"
 if ($auth -eq "") {
     if ("$env:WindowsAuth" -eq "Y") {
@@ -7,12 +13,16 @@ if ($auth -eq "") {
     }
 }
 $username = "$env:username"
-if ($username -eq "ContainerAdministrator") {
-    $username = ""
+if ($username -eq "ContainerAdministrator") { $username = "" }
+if ($auth -ne "Windows") {
+    if ($username -eq "") { $username = "admin" }
 }
+ 
 $password = "$env:password"
 $passwordSpecified = ($password -ne "")
-if (!$passwordSpecified) { $password = Get-RandomPassword }    
+if ($auth -ne "Windows") {
+    if (!$passwordSpecified) { $password = Get-RandomPassword }
+}
 
 $licensefile = "$env:licensefile"
 
